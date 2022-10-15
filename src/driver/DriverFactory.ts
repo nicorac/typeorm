@@ -30,6 +30,8 @@ export class DriverFactory {
     create(connection: DataSource): Driver {
         const { type } = connection.options
         switch (type) {
+            case "custom":
+                return new connection.options.driverType(connection)
             case "mysql":
                 return new MysqlDriver(connection)
             case "postgres":
@@ -76,6 +78,7 @@ export class DriverFactory {
                     "capacitor",
                     "cockroachdb",
                     "cordova",
+                    "custom",
                     "expo",
                     "mariadb",
                     "mongodb",
